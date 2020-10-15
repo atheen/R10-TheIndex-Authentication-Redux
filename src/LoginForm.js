@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import {login} from "./redux/actions"
+import { connect } from "react-redux";
 
-const Login = () => {
+import {Redirect} from "react-router-dom";
+
+
+const Login = (props) => {
   const [userData, setUserData] = useState({
     username: "",
     password: "",
@@ -12,10 +17,12 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert("I DON'T WORK YET");
+    props.login(userData)
   };
 
   const { username, password } = userData;
+
+  if (props.user) return <Redirect to="/" />
 
   return (
     <div className="col-6 mx-auto">
@@ -60,4 +67,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = ({user}) => ({user})
+
+const mapDispatchToProps = dispatch => ({
+  login: (userData) => dispatch(login(userData))
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 
 import store from "./redux";
+import {checkForExpiredToken} from "./redux/actions";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -16,5 +17,7 @@ ReactDOM.render(
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
+
 );
+store.dispatch(checkForExpiredToken())
 registerServiceWorker();
